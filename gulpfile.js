@@ -25,7 +25,7 @@ const browserSyncJob = () => {
         server: "build/"
     });
 
-    watch('dist/sass/*.scss', buildSass);
+    watch('dist/scss/common/*.scss', buildSass);
     watch('dist/pages/*.pug', buildPug);
 };
 
