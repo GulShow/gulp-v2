@@ -1,7 +1,8 @@
 'use strict';
-const { src, dest, parallel } = require('gulp');
+const { src, dest, parallel, watch} = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const pug = require('gulp-pug');
+const browserSync = require('browser-sync').create();
 
 const buildSass = () => {
     console.log('Компиляция SASS');
@@ -19,4 +20,14 @@ const buildPug = () => {
         .pipe(dest('build/html'));
 }
 
+const browserSyncJob = () => {
+    browserSync.init({
+        server: "build/"
+    });
+
+    watch('dist/sass/*.scss', buildSass);
+    watch('dist/pages/*.pug', buildPug);
+};
+
+exports.server = browserSyncJob;
 exports.build = parallel(buildSass, buildPug);
